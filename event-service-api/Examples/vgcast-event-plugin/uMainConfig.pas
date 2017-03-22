@@ -14,7 +14,7 @@ type
   TMainConfig = class(TPersistent)
   private
     FFileName   : string;
-    FJsonObject : TJSONObject;
+    FJSONObject : TJSONObject;
 
     FTplRepository   : string;
 
@@ -59,12 +59,13 @@ begin
   VgCast.Port := 5001;
   TplRepository := '';
 
-  FJsonObject := TJSONObject.Create;
+  FJSONObject := TJSONObject.Create;
 end;
 
 destructor TMainConfig.Destroy;
 begin
-  FreeAndNil(FJsonObject);
+  if Assigned(FJSONObject) then
+    FreeAndNil(FJSONObject);
   inherited Destroy;
 end;
 
@@ -81,8 +82,8 @@ begin
     if LJsonStream.DataString <> '' then
     begin
       try
-        FJsonObject:= TJsonObject.ParseJSONValue(LJsonStream.DataString) as TJsonObject;
-        ParseJson(FJsonObject);
+        FJSONObject.Parse(TEncoding.UTF8.GetBytes(LJsonStream.DataString), 0, true);
+        ParseJson(FJSONObject);
       except
         raise EMainConfig.Create('Failed parse json value');
       end;
@@ -139,9 +140,9 @@ var
   LJsonStream   : TStringStream;
   oVGCAST : TJSONObject;
 begin
-  if assigned(FJsonObject.Get('VgCast')) then
+  if assigned(FJSONObject.Get('VgCast')) then
   begin
-    oVGCAST := FJsonObject.Get('VgCast').JsonValue as TJsonObject;
+    oVGCAST := FJSONObject.Get('VgCast').JsonValue as TJsonObject;
     if assigned(oVGCAST.Get('Host')) then
     begin
       oVGCAST.Get('Host').JsonValue := TJsonString.Create(VgCast.Host);
@@ -164,15 +165,15 @@ begin
     FJsonObject.AddPair(TJsonPair.Create('VgCast', oVGCAST));
   end;
 
-  if assigned(FJsonObject.Get('TplRepository')) then
+  if assigned(FJSONObject.Get('TplRepository')) then
   begin
-    FJsonObject.Get('TplRepository').JsonValue :=  TJsonString.Create(FTplRepository)
+    FJSONObject.Get('TplRepository').JsonValue :=  TJsonString.Create(FTplRepository)
   end else
   begin
-    FJsonObject.AddPair(TJsonPair.Create('TplRepository', TJsonString.Create(FTplRepository)));
+    FJSONObject.AddPair(TJsonPair.Create('TplRepository', TJsonString.Create(FTplRepository)));
   end;
 
-  LJsonStream := TStringStream.Create(FJsonObject.ToString, TEncoding.UTF8);
+  LJsonStream := TStringStream.Create(FJSONObject.ToString, TEncoding.UTF8);
   try
     LJsonStream.SaveToFile(FFileName);
   finally

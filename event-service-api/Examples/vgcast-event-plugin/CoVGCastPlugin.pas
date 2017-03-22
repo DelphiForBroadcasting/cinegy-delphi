@@ -116,20 +116,54 @@ begin
         m_piLog.LogError(Format('VGCAST Plugin: Open %s', [LTplFileName]));
         exit(S_FALSE);
     end;
+  end else
+  if SameText(bstrCommand, 'HIDE') then
+  begin
+    if Length(bstrOp1) <= 0 then
+    begin
+      m_piLog.LogError('VGCAST Plugin: MbstrOp1');
+      exit(S_FALSE);
+    end;  
+	LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
+	LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
+    if LVgTpl.HIDE then
+    begin
+        m_piLog.LogInfo(Format('VGCAST Plugin: Hide %s', [LVgTpl.Name]));
+    end else
+    begin
+        m_piLog.LogError(Format('VGCAST Plugin: Hide %s', [LVgTpl.Name]));
+        exit(S_FALSE);
+    end;	
+  end else
+  if SameText(bstrCommand, 'DEL') then
+  begin
+    if Length(bstrOp1) <= 0 then
+    begin
+      m_piLog.LogError('VGCAST Plugin: MbstrOp1');
+      exit(S_FALSE);
+    end;  
+	LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
+	LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
+    if LVgTpl.DEL then
+    begin
+        m_piLog.LogInfo(Format('VGCAST Plugin: Del %s', [LVgTpl.Name]));
+    end else
+    begin
+        m_piLog.LogError(Format('VGCAST Plugin: Del %s', [LVgTpl.Name]));
+        exit(S_FALSE);
+    end;	  
   end;
-
   result := S_OK;
 end;
 
 function TVGCastPlugin.ShutDown: HResult;
 begin
-  FVgCastHandler.Destroy;
+  //FVgCastHandler.Destroy;
   FMainConfig.Destroy;
 
   if assigned(m_piLog) then
   begin
     m_piLog.LogInfo('Closing device');
-	  m_piLog._Release;
   end;
 
   result := S_OK;

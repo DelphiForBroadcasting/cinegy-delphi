@@ -301,7 +301,7 @@ end;
 destructor TVgCastSocket.Destroy;
 begin
   Disconnect;
-  FTCPClient.Destroy;
+  FreeAndNil(FTCPClient);
   inherited Destroy;
 end;
 
@@ -478,7 +478,6 @@ begin
       sleep(100);
       Continue;
     end;
-
     if FOwner.IOHandler.InputBufferIsEmpty  then
     begin
       SetLength(LBuffer, 0);
