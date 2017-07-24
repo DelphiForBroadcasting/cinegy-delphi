@@ -1,0 +1,299 @@
+object Form1: TForm1
+  Left = 0
+  Top = 0
+  Caption = 'Form1'
+  ClientHeight = 662
+  ClientWidth = 921
+  Position = ScreenCenter
+  FormFactor.Width = 320
+  FormFactor.Height = 480
+  FormFactor.Devices = [Desktop]
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  DesignerMasterStyle = 0
+  object Memo1: TMemo
+    Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
+    DataDetectorTypes = []
+    Align = Bottom
+    Position.Y = 422.000000000000000000
+    Size.Width = 921.000000000000000000
+    Size.Height = 218.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 0
+    Viewport.Width = 917.000000000000000000
+    Viewport.Height = 214.000000000000000000
+  end
+  object StatusBar1: TStatusBar
+    Position.Y = 640.000000000000000000
+    ShowSizeGrip = True
+    Size.Width = 921.000000000000000000
+    Size.Height = 22.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 1
+  end
+  object Splitter1: TSplitter
+    Align = Bottom
+    Cursor = crVSplit
+    MinSize = 20.000000000000000000
+    Position.Y = 414.000000000000000000
+    Size.Width = 921.000000000000000000
+    Size.Height = 8.000000000000000000
+    Size.PlatformDefault = False
+  end
+  object Layout1: TLayout
+    Align = Client
+    Size.Width = 921.000000000000000000
+    Size.Height = 414.000000000000000000
+    Size.PlatformDefault = False
+    TabOrder = 3
+    object Button1: TButton
+      Position.X = 688.000000000000000000
+      Position.Y = 32.000000000000000000
+      TabOrder = 0
+      Text = 'Connect'
+      OnClick = Button1Click
+    end
+    object Label1: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Server'
+    end
+    object Edit1: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 9
+      Text = 'cinesql2014'
+      Position.X = 8.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Label2: TLabel
+      Position.X = 128.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Port'
+    end
+    object Edit2: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 8
+      Text = '8082'
+      Position.X = 128.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Edit3: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 7
+      Text = 'TRKua2'
+      Position.X = 208.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Edit4: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 3
+      Text = 'cadmin'
+      Position.X = 328.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Edit5: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 4
+      Text = 'Ci@dmin'
+      Position.X = 448.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Edit6: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 2
+      Text = 'cinegy.dema'
+      Position.X = 568.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Label6: TLabel
+      Position.X = 568.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Domain'
+    end
+    object Label5: TLabel
+      Position.X = 448.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Password'
+    end
+    object Label4: TLabel
+      Position.X = 328.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Username'
+    end
+    object Label3: TLabel
+      Position.X = 208.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'Database'
+    end
+    object Label7: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 88.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'NodeID'
+    end
+    object Edit7: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 17
+      Text = 'C2AA1BD5-324A-E711-811E-00155D018E3D'
+      Position.X = 8.000000000000000000
+      Position.Y = 102.000000000000000000
+      Size.Width = 249.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Button2: TButton
+      Position.X = 264.000000000000000000
+      Position.Y = 102.000000000000000000
+      TabOrder = 24
+      Text = 'GetNode'
+      OnClick = Button2Click
+    end
+    object Button3: TButton
+      Position.X = 352.000000000000000000
+      Position.Y = 102.000000000000000000
+      TabOrder = 26
+      Text = 'GetChildren'
+      OnClick = Button3Click
+    end
+    object Button4: TButton
+      Position.X = 416.000000000000000000
+      Position.Y = 150.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 28
+      Text = 'Search'
+      OnClick = Button4Click
+    end
+    object Label8: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 136.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'TrafficID'
+    end
+    object Edit8: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 15
+      Text = 'MTU0051651'
+      Position.X = 8.000000000000000000
+      Position.Y = 150.000000000000000000
+      Size.Width = 249.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Button5: TButton
+      Position.X = 264.000000000000000000
+      Position.Y = 78.000000000000000000
+      TabOrder = 23
+      Text = 'GetNodeEx'
+      OnClick = Button5Click
+    end
+    object Button6: TButton
+      Position.X = 352.000000000000000000
+      Position.Y = 78.000000000000000000
+      TabOrder = 25
+      Text = 'GetChildrenEx'
+      OnClick = Button6Click
+    end
+    object Edit9: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 14
+      Text = 'traffic_programm_id'
+      Position.X = 264.000000000000000000
+      Position.Y = 150.000000000000000000
+      Size.Width = 145.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Button7: TButton
+      Position.X = 8.000000000000000000
+      Position.Y = 286.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 27
+      Text = 'Create Placeholder'
+      OnClick = Button7Click
+    end
+    object Label9: TLabel
+      Position.X = 8.000000000000000000
+      Position.Y = 240.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'NodeID'
+    end
+    object Edit10: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 16
+      Text = 'test placeholder'
+      Position.X = 8.000000000000000000
+      Position.Y = 254.000000000000000000
+      Size.Width = 129.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Label10: TLabel
+      Position.X = 144.000000000000000000
+      Position.Y = 240.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'NodeID'
+    end
+    object Edit11: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 18
+      Text = '98fd8cc3-c346-e711-811d-00155d018e3d'
+      Position.X = 144.000000000000000000
+      Position.Y = 254.000000000000000000
+      Size.Width = 249.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+  end
+  object MainMenu1: TMainMenu
+    Left = 536
+    Top = 312
+  end
+end
