@@ -7,7 +7,7 @@ uses
   FMX.Types, FMX.Controls, FMX.Forms, FMX.Graphics, FMX.Dialogs,
   Soap.InvokeRegistry, FMX.ScrollBox, FMX.Memo, FMX.Controls.Presentation,
   FMX.StdCtrls, Soap.Rio, Soap.SOAPHTTPClient, ICinegyDataAccessService1, FH.CINEGY.CAS.SOAP.CLIENT,
-  FMX.Edit, FMX.Layouts, FMX.Menus;
+  FMX.Edit, FMX.Layouts, FMX.Menus, FMX.ListBox;
 
 type
   TForm1 = class(TForm)
@@ -44,6 +44,12 @@ type
     Edit10: TEdit;
     Label10: TLabel;
     Edit11: TEdit;
+    Button8: TButton;
+    Button9: TButton;
+    Label11: TLabel;
+    Edit12: TEdit;
+    Label12: TLabel;
+    ComboBox1: TComboBox;
     procedure Button1Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -53,6 +59,8 @@ type
     procedure Button5Click(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
+    procedure Button8Click(Sender: TObject);
+    procedure Button9Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -180,7 +188,7 @@ begin
   memo1.Lines.Add(Format('Node[%s].Name: %s', [Edit7.Text, LNode.name_]));
   memo1.Lines.Add(Format('Node[%s].Creation: %s', [Edit7.Text, FormatDatetime('yyyy-mm-dd hh:mm:ss', LNode.creation.AsDateTime)]));
 
-
+  memo1.Lines.Add(Format('Node[%s]._subtype = %d', [LNode._id._nodeid_id, LNode._subtype]));
   case LNode._type of
     TNodeType.ROOT:
     begin
@@ -239,6 +247,25 @@ begin
   memo1.Lines.Add(Format('Node[%s].Name: %s', [LNode._id._nodeid_id, LNode.name_]));
   memo1.Lines.Add(Format('Node[%s].Creation: %s', [LNode._id._nodeid_id, FormatDatetime('yyyy-mm-dd hh:mm:ss', LNode.creation.AsDateTime)]));
 
+end;
+
+procedure TForm1.Button8Click(Sender: TObject);
+var
+  LExportPlugins: TArray<string>;
+  i             : integer;
+begin
+  LExportPlugins := FCinegyArchiveServiceClient.EnumExportPlugins;
+
+  combobox1.Items.Clear;
+  for i := 0 to Length(LExportPlugins) - 1 do
+  begin
+    combobox1.Items.Add(LExportPlugins[i])
+  end;
+end;
+
+procedure TForm1.Button9Click(Sender: TObject);
+begin
+  memo1.Lines.Add(FCinegyArchiveServiceClient.ExportNode(edit12.Text, combobox1.Items.Strings[combobox1.ItemIndex]));
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
