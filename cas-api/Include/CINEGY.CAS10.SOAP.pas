@@ -22726,6 +22726,7 @@ initialization
   InvRegistry.RegisterDefaultSOAPAction(TypeInfo(ICinegyDataAccessService), 'http://tempuri.org/ICinegyDataAccessService/%operationName%');
   InvRegistry.RegisterInvokeOptions(TypeInfo(ICinegyDataAccessService), ioDocument);
   InvRegistry.RegisterInvokeOptions(TypeInfo(ICinegyDataAccessService), ioLiteral);
+
   { ICinegyDataAccessService.Export_ }
   InvRegistry.RegisterMethodInfo(TypeInfo(ICinegyDataAccessService), 'Export_', 'Export', '');
   { ICinegyDataAccessServiceCompressed }

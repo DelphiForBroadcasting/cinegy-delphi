@@ -4,8 +4,7 @@ uses
   System.StartUpCopy,
   FMX.Forms,
   Unit1 in 'Unit1.pas' {Form1},
-  FH.CINEGY.CAS.SOAP.CLIENT in '../../Include/FH.CINEGY.CAS.SOAP.CLIENT.pas',
-  CINEGY.CAS14.SOAP in '../../Include/CINEGY.CAS14.SOAP.pas';
+  FH.CINEGY.CAS.REST.CLIENT in '..\..\Include\FH.CINEGY.CAS.REST.CLIENT.pas';
 
 {$R *.res}
 

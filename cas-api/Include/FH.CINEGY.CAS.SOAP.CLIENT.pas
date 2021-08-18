@@ -8,13 +8,15 @@ uses
   System.Types,
   System.DateUtils,
   System.Classes,
+  System.Variants,
   WinApi.ActiveX,
   System.Generics.Collections,
   System.IOUtils,
   System.SyncObjs,
   Soap.XSBuiltIns,
   Soap.SOAPHTTPClient,
-  ICinegyDataAccessService1;
+  Soap.OpConvertOptions,
+  CINEGY.CAS14.SOAP;
 
 type
   TConnectionType = ConnectionType;
@@ -51,8 +53,6 @@ type
   TCinegyArchiveServiceClient = class(TInterfacedObject, IUnknown)
   private const
     cApplicationName = 'FH.CINEGY.CAS.CLIENT';
-    //cApplicationGuid = '{705EADF7-EAAD-4f7c-8141-862C2C511A61}';  //Development License
-    cApplicationGuid = '{6EECC5D8-DF37-4ead-B79C-25874FD616A2}';
     cMinimumCasVersion = 1411301;
     cVersionId = '1.0';
   private
@@ -64,8 +64,10 @@ type
 
     FHost                       : string;
     FPort                       : word;
+    FSQLServer                  : string;
     FDatabase                   : string;
     FConnectionType             : TConnectionType;
+    FApplicationLicense         : string;
     FUsername                   : string;
     FPassword                   : string;
     FDomain                     : string;
@@ -73,11 +75,13 @@ type
     function GetWSDLAddr: string;
     procedure SetPort(const AValue: word);
     procedure SetHost(const AValue: string);
+    procedure SetSQLServer(const AValue: string);
     procedure SetDatabase(const AValue: string);
     procedure SetUsername(const AValue: string);
     procedure SetPassword(const AValue: string);
     procedure SetDomain(const AValue: string);
     procedure SetConnectionType(const AValue: TConnectionType);
+    procedure SetApplicationLicense(const AValue: string);
 
     procedure DoError(const Sender: TObject; const errorCode: integer; const errorText: string);
 
@@ -92,6 +96,9 @@ type
     function GetNode(const nodeID: string): Node2; overload;
     function GetServerConnectionInfo: TConnectionInfo;
 
+    // SOAP
+    procedure SetSOAPConvertOptions(const Options: TSOAPConvertOptions);
+    function GetSOAPConvertOptions(): TSOAPConvertOptions;
   protected
     (* IUnknown methods *)
     function QueryInterface(const IID: TGUID; out Obj): HResult; stdcall;
@@ -103,8 +110,8 @@ type
 
     function Connect(): boolean;
     function Disconnect(): boolean;
-    function SearchList(const searchText: string): TArray<string>;
-    //function CreateSubClip(const node: NodeBase2; const dstParent: NodeBase2; properties: TArray<TPair<string, string>>): boolean;
+    function SearchList(const searchText: string; const pageSize : integer = 100): TArray<string>;
+    function CreateSubClip(const NodeID: string; properties: TArray<TPair<string, string>>): Node2;
     //function GetNodesCount(onst node: NodeBase2; const requestType : TNodeRequestType): integer;
     //function MoveNode(const node: Node2; const dstParent: NodeBase2): boolean;
     //function CopyNode(const node: NodeBase2; const dstParent: NodeBase2; const newNodeID: string): boolean;
@@ -114,13 +121,17 @@ type
     //function RestoreNode(const node: NodeBase2): boolean;
     //function DeleteNode(const node: NodeBase2): boolean;
     function CreatePlaceholder(const Name: string; const parentNodeID: string): Node2;
+    function CreateBin(const parentID: string; const Name: string; const subtype: integer; const tvFormat: integer): Node2;
     function GetChildrenNodes(const node: NodeBase2; const requestType : TNodeRequestType = TNodeRequestType.NotDeleted): TArray<Node2>;
     function GetChildrenNodesEx(const node: NodeBase2; const requestType : TNodeRequestType = TNodeRequestType.NotDeleted; const FillingType: TNodeFillingType = TNodeFillingType.MAIN): TArray<Node2>;
     procedure NodeLock(const node: NodeBase2; const lockType: TNodeLockType);
     procedure NodeUnlock(const node: NodeBase2);
     function GetNodeEx(const nodeID: string; const requestType : TNodeRequestType = TNodeRequestType.NotDeleted; const FillingType: TNodeFillingType = TNodeFillingType.MAIN): Node2;
+    function GetMetaData(const nodeID: string): TArray<MetadataObject2>;
+
     function EnumExportPlugins: TArray<string>;
     function ExportNode(const nodeID: string; const ExportPlugin: string): string;
+    function GetSubTypesInfo(): ArrayOfSubTypeObject;
 
     property Root: Node2 read GetRootNode;
     property Node[const NodeId: string]: Node2 read GetNode;
@@ -130,11 +141,15 @@ type
 
     property Host: string read FHost write SetHost;
     property Port: word read FPort write SetPort;
+    property SQLServer: string read FSQLServer write SetSQLServer;
     property Database: string read FDatabase write SetDatabase;
     property ConnectionType: TConnectionType read FConnectionType write SetConnectionType;
     property Username: string read FUsername write SetUsername;
     property Password: string read FPassword write SetPassword;
     property Domain: string read FDomain write SetDomain;
+    property ApplicationLicense: string read FApplicationLicense write SetApplicationLicense;
+
+    property SOAPConvertOptions: TSOAPConvertOptions read GetSOAPConvertOptions write SetSOAPConvertOptions;
 
     property OnError: TErrorNotify read FOnError write FOnError;
   end;
@@ -164,6 +179,10 @@ begin
   FRIO:= THTTPRIO.Create(nil);
   FRIO.OnBeforeExecute := RIOBeforeExecute;
   FRIO.OnAfterExecute := RIOAfterExecute;
+  SOAPConvertOptions := [soSendMultiRefObj, soTryAllSchema, soUTF8EncodeXML, soCacheMimeResponse, soSendUntyped, soUTF8InHeader];
+  FSQLServer := '.';
+  FPort := 0;
+  ApplicationLicense := '{705EADF7-EAAD-4f7c-8141-862C2C511A61}';  //Development License
 end;
 
 destructor TCinegyArchiveServiceClient.Destroy;
@@ -174,6 +193,16 @@ begin
   CoUninitialize;
 
   inherited Destroy;
+end;
+
+procedure TCinegyArchiveServiceClient.SetSOAPConvertOptions(const Options: TSOAPConvertOptions);
+begin
+  FRIO.Converter.Options := Options;
+end;
+
+function TCinegyArchiveServiceClient.GetSOAPConvertOptions(): TSOAPConvertOptions;
+begin
+  result := FRIO.Converter.Options;
 end;
 
 procedure TCinegyArchiveServiceClient.RIOBeforeExecute(const MethodName: string; SOAPRequest: TStream);
@@ -258,6 +287,13 @@ begin
   else  FHost := 'localhost';
 end;
 
+procedure TCinegyArchiveServiceClient.SetSQLServer(const AValue: string);
+begin
+  if not AValue.IsEmpty then
+    FSQLServer := AValue
+  else  FSQLServer := '.';
+end;
+
 procedure TCinegyArchiveServiceClient.SetDatabase(const AValue: string);
 begin
   if AValue.IsEmpty then
@@ -286,14 +322,18 @@ begin
   FConnectionType := AValue;
 end;
 
+procedure TCinegyArchiveServiceClient.SetApplicationLicense(const AValue: string);
+begin
+  if length(AValue) >= 36 then
+    FApplicationLicense :='{' + AValue.Trim(['{','}']) + '}';
+end;
+
 
 function TCinegyArchiveServiceClient.Connect(): boolean;
 var
   LRequest  : ConnectMessageRequest;
   LResponse : ConnectMessageResponse;
 begin
-  if FPort = 0 then
-    FPort := 8082;
   if FHost.IsEmpty then
     raise Exception.Create('Error connect to server, host not set!');
   if FDatabase.IsEmpty then
@@ -301,13 +341,13 @@ begin
 
   FICinegyDataAccessService := GetICinegyDataAccessService(false, Self.GetWSDLAddr, FRIO);
   LRequest := ConnectMessageRequest.Create;
-  LRequest.server := FHost;
-  LRequest.port := FPort;
+  LRequest.server := FSQLServer;
+  LRequest.port := 0;
   LRequest.database := FDatabase;
   LRequest.connectionType := FConnectionType;
   LRequest.username := FUsername;
   LRequest.password := FPassword;
-  LRequest.application_ := Format('%s##%s##%d##%s', [cApplicationName, cApplicationGuid, cMinimumCasVersion, cVersionId]);
+  LRequest.application_ := Format('%s##%s##%d##%s', [cApplicationName, FApplicationlicense, cMinimumCasVersion, cVersionId]);
   LRequest.domain := FDomain;
   LRequest.wrapper := WrapperType.None;
   LResponse := FICinegyDataAccessService.Connect(LRequest);
@@ -359,14 +399,22 @@ var
   LRequest  : DisconnectMessageRequest;
   LResponse : DisconnectMessageResponse;
 begin
-  LRequest := DisconnectMessageRequest.Create;
-  LRequest.context := FConnectContext2;
-  LResponse := FICinegyDataAccessService.Disconnect(LRequest);
-  if LResponse.retCode <> 0 then
+  result := false;
+  if assigned(FICinegyDataAccessService) then
   begin
-    DoError(Self, LResponse.retCode, LResponse.error);
+    LRequest := DisconnectMessageRequest.Create;
+    LRequest.context := FConnectContext2;
+    LResponse := FICinegyDataAccessService.Disconnect(LRequest);
+    if LResponse.retCode <> 0 then
+    begin
+      DoError(Self, LResponse.retCode, LResponse.error);
+    end;
+    if LResponse.retCode = 0 then
+    begin
+      FICinegyDataAccessService := nil;
+      result := true;
+    end;
   end;
-  result :=  LResponse.retCode = 0;
 end;
 
 function TCinegyArchiveServiceClient.GetVersion(): integer;
@@ -510,6 +558,33 @@ begin
     DoError(Self, LResponse.retCode, LResponse.error);
 end;
 
+function TCinegyArchiveServiceClient.GetMetaData(const nodeID: string): TArray<MetadataObject2>;
+var
+  LRequest  : GetMetadataMessageRequest;
+  LResponse : GetMetadataMessageResponse;
+  LNodeID   : NODEID2;
+  i         : Integer;
+begin
+  result := nil;
+  LRequest := GetMetadataMessageRequest.Create;
+  LRequest.context := FConnectContext2;
+  LNodeID := NODEID2.Create;
+  LNodeID._nodeid_id := nodeID;
+  LRequest.node := NodeBase2.Create;
+  LRequest.node._id := LNodeID;
+  LResponse := FICinegyDataAccessService.GetMetadata(LRequest);
+  if LResponse.retCode = 0 then
+  begin
+    if assigned(LResponse.metadata) then
+    begin
+      SetLength(result, Length(LResponse.metadata.metadata));
+      for I := 0 to Length(LResponse.metadata.metadata) - 1 do
+        result[i]:= LResponse.metadata.metadata[i]
+    end;
+  end else
+    DoError(Self, LResponse.retCode, LResponse.error);
+end;
+
 function TCinegyArchiveServiceClient.GetNodeEx(const nodeID: string; const requestType : TNodeRequestType = TNodeRequestType.NotDeleted; const FillingType: TNodeFillingType = TNodeFillingType.MAIN): Node2;
 var
   LRequest  : GetNodeMessageRequestEx;
@@ -533,7 +608,7 @@ begin
     DoError(Self, LResponse.retCode, LResponse.error);
 end;
 
-function TCinegyArchiveServiceClient.SearchList(const searchText: string): TArray<string>;
+function TCinegyArchiveServiceClient.SearchList(const searchText: string; const pageSize : integer = 100): TArray<string>;
 var
   LRequest  : SearchListMessageRequest;
   LResponse : SearchListMessageResponse;
@@ -547,7 +622,7 @@ begin
   LRequest.sp._guid_start_id := System.SysUtils.GuidToString(TGUID.Empty);
   LRequest.sp._guidSession := System.SysUtils.GuidToString(TGUID.NewGuid);
   LRequest.sp._nIsSync := 0;
-  LRequest.sp._nPageSize := 50;
+  LRequest.sp._nPageSize := pageSize;
   LRequest.sp._nUseTotal := 0;
   LRequest.sp._nTotal := 0;
   LRequest.sp._str_search := searchText;
@@ -582,6 +657,23 @@ begin
     DoError(Self, LResponse.retCode, LResponse.error);
 end;
 
+function TCinegyArchiveServiceClient.GetSubTypesInfo(): ArrayOfSubTypeObject;
+var
+  LRequest  : SubTypeInfoMessageRequest;
+  LResponse : SubTypeInfoMessageResponse;
+  i         : integer;
+begin
+  LRequest := SubTypeInfoMessageRequest.Create;
+  LRequest.context := FConnectContext2;
+
+  LResponse := FICinegyDataAccessService.GetSubTypesInfo(LRequest);
+  if LResponse.retCode = 0 then
+  begin
+    result := LResponse.subtypes.SubTypes;
+  end else
+    DoError(Self, LResponse.retCode, LResponse.error);
+end;
+
 function TCinegyArchiveServiceClient.ExportNode(const nodeID: string; const ExportPlugin: string): string;
 var
   LRequest  : ExportMessageRequest;
@@ -604,6 +696,112 @@ end;
 function TCinegyArchiveServiceClient.GetNode(const nodeID: string): Node2;
 begin
   result := GetNode(nodeID, TNodeRequestType.NotDeleted);
+end;
+
+
+function TCinegyArchiveServiceClient.CreateBin(const parentID: string; const Name: string; const subtype: integer; const tvFormat: integer): Node2;
+var
+  LParentNode       : Node2;
+  LBinNode          : BinNode;
+  LBinNodeRequest   : CreateNodeMessageRequest;
+  LBinNodeResponse  : CreateNodeMessageResponse;
+begin
+  LParentNode := Self.GetNodeEx(parentID);
+
+  LBinNode := BinNode.Create;
+  LBinNode.name_ := Name;
+  LBinNode._id := NODEID2.Create;
+  LBinNode._id._nodeid_id := GUIDToString(TGuid.Empty);
+  LBinNode.predecessorID := NODEID2.Create;
+  LBinNode.predecessorID._nodeid_id := GUIDToString(TGuid.Empty);
+
+  LBinNode.parentID := LParentNode._id;
+
+  LBinNode._type := NODE_TYPE.BIN;
+  LBinNode._subtype := subtype;
+
+  LBinNode.priority := 1;
+  LBinNode.tvFormat := tvFormat;
+  LBinNode.isArchive := false;
+
+  LBinNode.creation := TXSDateTime.Create;
+  LBinNode.creation.AsDateTime := Now;
+  LBinNode.modification := TXSDateTime.Create;
+  LBinNode.modification.AsDateTime := Now;
+
+  LBinNodeRequest := CreateNodeMessageRequest.Create;
+  LBinNodeRequest.context := FConnectContext2;
+  LBinNodeRequest.node := LBinNode as Node2;
+  LBinNodeRequest.insertBefore := false;
+  LBinNodeRequest.insertPosition := nil;
+  LBinNodeRequest.extraData := System.Variants.Null;
+
+  LBinNodeResponse := FICinegyDataAccessService.CreateNode(LBinNodeRequest);
+  if LBinNodeResponse.retCode <> 0 then
+  begin
+    raise Exception.Create(LBinNodeResponse.error);
+  end;
+
+end;
+
+function TCinegyArchiveServiceClient.CreateSubClip(const NodeID: string; properties: TArray<TPair<string, string>>): Node2;
+var
+  LMasterNode             : Node2;
+  LParentNode             : Node2;
+  LCreateSubClipRequest   : CreateSubClipMessageRequest;
+  LCreateSubClipResponse  : CreateSubClipMessageResponse;
+
+  LArrayOfProperty        : ArrayOfPropertyObjectBase;
+  LPropertySet            : PropertySetObject2;
+  LPredefinedProperty     : PredefinedPropertyObject2;
+begin
+
+  LMasterNode := Self.GetNodeEx(NodeID);
+  LParentNode := Self.GetNodeEx(LMasterNode.parentID._nodeid_id);
+
+  LCreateSubClipRequest := CreateSubClipMessageRequest.Create;
+  LCreateSubClipRequest.context := FConnectContext2;
+  LCreateSubClipRequest.node := LMasterNode;
+  LCreateSubClipRequest.dstParent := LParentNode;
+
+  LCreateSubClipRequest.insertPosition := nil;
+  LCreateSubClipRequest.insertBefore := false;
+
+  LCreateSubClipRequest.newNodeID := NODEID2.Create;
+  LCreateSubClipRequest.newNodeID._nodeid_id := GUIDToString(TGuid.NewGuid);
+
+  //PROPERTY_NUM
+  LPropertySet := PropertySetObject2.Create;
+
+
+  SetLength(LArrayOfProperty, 2);
+
+  LPredefinedProperty := PredefinedPropertyObject2.Create;
+  LPredefinedProperty.fieldNum := PROPERTY_NUM.IN_;
+  LPredefinedProperty.value :=  (1 * (25 * 40)) * 10000;
+  LArrayOfProperty[0] := LPredefinedProperty;
+  LPredefinedProperty := nil;
+
+  LPredefinedProperty := PredefinedPropertyObject2.Create;
+  LPredefinedProperty.fieldNum := PROPERTY_NUM.OUT_;
+  LPredefinedProperty.value :=  (2 * (25 * 40)) * 10000;
+  LArrayOfProperty[1] := LPredefinedProperty;
+  LPredefinedProperty := nil;
+
+
+  LPropertySet.properties :=  LArrayOfProperty;
+
+  //LCreateSubClipRequest.properties := LPropertySet;
+
+
+
+
+  LCreateSubClipResponse := FICinegyDataAccessService.CreateSubClip(LCreateSubClipRequest);
+  if LCreateSubClipResponse.retCode <> 0 then
+  begin
+    raise Exception.Create(LCreateSubClipResponse.error);
+  end;
+
 end;
 
 function TCinegyArchiveServiceClient.CreatePlaceholder(const Name: string; const parentNodeID: string): Node2;

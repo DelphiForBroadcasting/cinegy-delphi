@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 662
+  ClientHeight = 705
   ClientWidth = 921
   Position = ScreenCenter
   FormFactor.Width = 320
@@ -15,7 +15,7 @@ object Form1: TForm1
     Touch.InteractiveGestures = [Pan, LongTap, DoubleTap]
     DataDetectorTypes = []
     Align = Bottom
-    Position.Y = 422.000000000000000000
+    Position.Y = 465.000000000000000000
     Size.Width = 921.000000000000000000
     Size.Height = 218.000000000000000000
     Size.PlatformDefault = False
@@ -24,7 +24,7 @@ object Form1: TForm1
     Viewport.Height = 214.000000000000000000
   end
   object StatusBar1: TStatusBar
-    Position.Y = 640.000000000000000000
+    Position.Y = 683.000000000000000000
     ShowSizeGrip = True
     Size.Width = 921.000000000000000000
     Size.Height = 22.000000000000000000
@@ -35,7 +35,7 @@ object Form1: TForm1
     Align = Bottom
     Cursor = crVSplit
     MinSize = 20.000000000000000000
-    Position.Y = 414.000000000000000000
+    Position.Y = 457.000000000000000000
     Size.Width = 921.000000000000000000
     Size.Height = 8.000000000000000000
     Size.PlatformDefault = False
@@ -43,11 +43,11 @@ object Form1: TForm1
   object Layout1: TLayout
     Align = Client
     Size.Width = 921.000000000000000000
-    Size.Height = 414.000000000000000000
+    Size.Height = 457.000000000000000000
     Size.PlatformDefault = False
     TabOrder = 3
     object Button1: TButton
-      Position.X = 688.000000000000000000
+      Position.X = 808.000000000000000000
       Position.Y = 32.000000000000000000
       TabOrder = 0
       Text = 'Connect'
@@ -63,8 +63,8 @@ object Form1: TForm1
     end
     object Edit1: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 9
-      Text = 'cinesql2014'
+      TabOrder = 10
+      Text = 'CAS03'
       Position.X = 8.000000000000000000
       Position.Y = 32.000000000000000000
       Size.Width = 113.000000000000000000
@@ -81,7 +81,7 @@ object Form1: TForm1
     end
     object Edit2: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 8
+      TabOrder = 9
       Text = '8082'
       Position.X = 128.000000000000000000
       Position.Y = 32.000000000000000000
@@ -91,9 +91,9 @@ object Form1: TForm1
     end
     object Edit3: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 7
-      Text = 'TRKua2'
-      Position.X = 208.000000000000000000
+      TabOrder = 8
+      Text = 'TRKuaV14'
+      Position.X = 328.000000000000000000
       Position.Y = 32.000000000000000000
       Size.Width = 113.000000000000000000
       Size.Height = 22.000000000000000000
@@ -102,8 +102,8 @@ object Form1: TForm1
     object Edit4: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 3
-      Text = 'cadmin'
-      Position.X = 328.000000000000000000
+      Text = 'o.nazaruk'
+      Position.X = 448.000000000000000000
       Position.Y = 32.000000000000000000
       Size.Width = 113.000000000000000000
       Size.Height = 22.000000000000000000
@@ -112,8 +112,9 @@ object Form1: TForm1
     object Edit5: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 4
-      Text = 'Ci@dmin'
-      Position.X = 448.000000000000000000
+      Password = True
+      Text = 'es@dmin1.'
+      Position.X = 568.000000000000000000
       Position.Y = 32.000000000000000000
       Size.Width = 113.000000000000000000
       Size.Height = 22.000000000000000000
@@ -122,15 +123,15 @@ object Form1: TForm1
     object Edit6: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
       TabOrder = 2
-      Text = 'cinegy.dema'
-      Position.X = 568.000000000000000000
+      Text = 'CINEGY.TV'
+      Position.X = 688.000000000000000000
       Position.Y = 32.000000000000000000
       Size.Width = 113.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
     end
     object Label6: TLabel
-      Position.X = 568.000000000000000000
+      Position.X = 688.000000000000000000
       Position.Y = 16.000000000000000000
       Size.Width = 73.000000000000000000
       Size.Height = 17.000000000000000000
@@ -138,7 +139,7 @@ object Form1: TForm1
       Text = 'Domain'
     end
     object Label5: TLabel
-      Position.X = 448.000000000000000000
+      Position.X = 568.000000000000000000
       Position.Y = 16.000000000000000000
       Size.Width = 73.000000000000000000
       Size.Height = 17.000000000000000000
@@ -146,7 +147,7 @@ object Form1: TForm1
       Text = 'Password'
     end
     object Label4: TLabel
-      Position.X = 328.000000000000000000
+      Position.X = 448.000000000000000000
       Position.Y = 16.000000000000000000
       Size.Width = 73.000000000000000000
       Size.Height = 17.000000000000000000
@@ -154,7 +155,7 @@ object Form1: TForm1
       Text = 'Username'
     end
     object Label3: TLabel
-      Position.X = 208.000000000000000000
+      Position.X = 328.000000000000000000
       Position.Y = 16.000000000000000000
       Size.Width = 73.000000000000000000
       Size.Height = 17.000000000000000000
@@ -171,7 +172,7 @@ object Form1: TForm1
     end
     object Edit7: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 18
+      TabOrder = 19
       Text = 'C2AA1BD5-324A-E711-811E-00155D018E3D'
       Position.X = 8.000000000000000000
       Position.Y = 102.000000000000000000
@@ -182,14 +183,14 @@ object Form1: TForm1
     object Button2: TButton
       Position.X = 264.000000000000000000
       Position.Y = 102.000000000000000000
-      TabOrder = 25
+      TabOrder = 26
       Text = 'GetNode'
       OnClick = Button2Click
     end
     object Button3: TButton
       Position.X = 352.000000000000000000
       Position.Y = 102.000000000000000000
-      TabOrder = 27
+      TabOrder = 28
       Text = 'GetChildren'
       OnClick = Button3Click
     end
@@ -197,9 +198,9 @@ object Form1: TForm1
       Position.X = 416.000000000000000000
       Position.Y = 150.000000000000000000
       Size.Width = 89.000000000000000000
-      Size.Height = 22.000000000000000000
+      Size.Height = 49.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 29
+      TabOrder = 31
       Text = 'Search'
       OnClick = Button4Click
     end
@@ -213,37 +214,39 @@ object Form1: TForm1
     end
     object Edit8: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 15
-      Text = 'MTU0051651'
+      TabOrder = 16
+      Text = 'MTU0064275-2-3'
       Position.X = 8.000000000000000000
       Position.Y = 150.000000000000000000
       Size.Width = 249.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
+      OnChange = Edit8Change
     end
     object Button5: TButton
       Position.X = 264.000000000000000000
       Position.Y = 78.000000000000000000
-      TabOrder = 24
+      TabOrder = 25
       Text = 'GetNodeEx'
       OnClick = Button5Click
     end
     object Button6: TButton
       Position.X = 352.000000000000000000
       Position.Y = 78.000000000000000000
-      TabOrder = 26
+      TabOrder = 27
       Text = 'GetChildrenEx'
       OnClick = Button6Click
     end
     object Edit9: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 14
+      TabOrder = 15
       Text = 'traffic_programm_id'
       Position.X = 264.000000000000000000
       Position.Y = 150.000000000000000000
       Size.Width = 145.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
+      OnChange = Edit8Change
     end
     object Button7: TButton
       Position.X = 8.000000000000000000
@@ -251,7 +254,7 @@ object Form1: TForm1
       Size.Width = 89.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 28
+      TabOrder = 29
       Text = 'Create Placeholder'
       OnClick = Button7Click
     end
@@ -265,7 +268,7 @@ object Form1: TForm1
     end
     object Edit10: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 16
+      TabOrder = 17
       Text = 'test placeholder'
       Position.X = 8.000000000000000000
       Position.Y = 254.000000000000000000
@@ -283,7 +286,7 @@ object Form1: TForm1
     end
     object Edit11: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 19
+      TabOrder = 20
       Text = '98fd8cc3-c346-e711-811d-00155d018e3d'
       Position.X = 144.000000000000000000
       Position.Y = 254.000000000000000000
@@ -297,14 +300,14 @@ object Form1: TForm1
       Size.Width = 81.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 30
+      TabOrder = 32
       Text = 'EnumExportPlugins'
       OnClick = Button8Click
     end
     object Button9: TButton
       Position.X = 8.000000000000000000
       Position.Y = 384.000000000000000000
-      TabOrder = 31
+      TabOrder = 33
       Text = 'ExportNode'
       OnClick = Button9Click
     end
@@ -315,11 +318,11 @@ object Form1: TForm1
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
       Text = 'NodeID'
-      TabOrder = 32
+      TabOrder = 34
     end
     object Edit12: TEdit
       Touch.InteractiveGestures = [LongTap, DoubleTap]
-      TabOrder = 17
+      TabOrder = 18
       Text = 'C2AA1BD5-324A-E711-811E-00155D018E3D'
       Position.X = 8.000000000000000000
       Position.Y = 352.000000000000000000
@@ -334,7 +337,7 @@ object Form1: TForm1
       Size.Height = 17.000000000000000000
       Size.PlatformDefault = False
       Text = 'Plugin'
-      TabOrder = 33
+      TabOrder = 35
     end
     object ComboBox1: TComboBox
       Position.X = 264.000000000000000000
@@ -342,11 +345,268 @@ object Form1: TForm1
       Size.Width = 153.000000000000000000
       Size.Height = 22.000000000000000000
       Size.PlatformDefault = False
-      TabOrder = 34
+      TabOrder = 36
+    end
+    object Label13: TLabel
+      Position.X = 208.000000000000000000
+      Position.Y = 16.000000000000000000
+      Size.Width = 73.000000000000000000
+      Size.Height = 17.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'SQL Server'
+      TabOrder = 37
+    end
+    object Edit13: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 7
+      Text = 'SQL2016'
+      Position.X = 208.000000000000000000
+      Position.Y = 32.000000000000000000
+      Size.Width = 113.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object Button10: TButton
+      Position.X = 104.000000000000000000
+      Position.Y = 384.000000000000000000
+      Size.Width = 105.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 38
+      Text = 'GetSubTypesInfo'
+      OnClick = Button10Click
+    end
+    object Button11: TButton
+      Position.X = 416.000000000000000000
+      Position.Y = 214.000000000000000000
+      Size.Width = 89.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+      TabOrder = 30
+      Text = 'SearchAll'
+      OnClick = Button11Click
+    end
+    object GroupBox1: TGroupBox
+      Position.X = 568.000000000000000000
+      Position.Y = 88.000000000000000000
+      Size.Width = 297.000000000000000000
+      Size.Height = 361.000000000000000000
+      Size.PlatformDefault = False
+      Text = 'SOAPConvertOptions'
+      TabOrder = 39
+      object CheckBox1: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 24.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 5
+        Text = 'soSendUntyped'
+      end
+      object CheckBox2: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 40.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 3
+        Text = 'soSendMultiRefObj'
+      end
+      object CheckBox3: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 56.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 4
+        Text = 'soSendMultiRefArray'
+      end
+      object CheckBox4: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 72.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 1
+        Text = 'soTryAllSchema'
+      end
+      object CheckBox5: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 88.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 2
+        Text = 'soRootRefNodesToBody'
+      end
+      object CheckBox6: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 104.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 0
+        Text = 'soDocument'
+      end
+      object CheckBox7: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 120.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 6
+        Text = 'soReturnSuccessForFault'
+      end
+      object CheckBox8: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 136.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 7
+        Text = 'soUTF8InHeader'
+      end
+      object CheckBox9: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 152.000000000000000000
+        TabOrder = 8
+        Text = 'soDontSendEmptyNodes'
+      end
+      object CheckBox10: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 168.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 9
+        Text = 'soCacheMimeResponse'
+      end
+      object CheckBox11: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 184.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 10
+        Text = 'soDontClearOutBoundHeaders'
+      end
+      object CheckBox12: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 200.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 11
+        Text = 'soCustomFaultAtDetailsNode'
+      end
+      object CheckBox13: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 216.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 12
+        Text = 'soLiteralParams'
+      end
+      object CheckBox14: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 232.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 13
+        Text = 'soUTF8EncodeXML'
+      end
+      object CheckBox15: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 248.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 14
+        Text = 'soXXXXHdr'
+      end
+      object CheckBox16: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 264.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 15
+        Text = 'soFormElementUnqualifed'
+      end
+      object CheckBox17: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 280.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 16
+        Text = 'soSOAP12'
+      end
+      object CheckBox18: TCheckBox
+        Position.X = 16.000000000000000000
+        Position.Y = 296.000000000000000000
+        Size.Width = 250.000000000000000000
+        Size.Height = 19.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 17
+        Text = 'soDontSendVarArrayType'
+      end
+      object Button12: TButton
+        Position.X = 17.000000000000000000
+        Position.Y = 328.000000000000000000
+        Size.Width = 80.000000000000000000
+        Size.Height = 22.000000000000000000
+        Size.PlatformDefault = False
+        TabOrder = 39
+        Text = 'Set'
+        OnClick = Button12Click
+      end
+      object Button13: TButton
+        Position.X = 120.000000000000000000
+        Position.Y = 328.000000000000000000
+        TabOrder = 40
+        Text = 'Get'
+        OnClick = Button13Click
+      end
+    end
+    object Edit14: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 40
+      Position.X = 8.000000000000000000
+      Position.Y = 176.000000000000000000
+      Size.Width = 401.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
+    end
+    object CheckBox19: TCheckBox
+      Position.X = 8.000000000000000000
+      Position.Y = 200.000000000000000000
+      TabOrder = 41
+      Text = 'is exact string'
+    end
+    object Edit15: TEdit
+      Touch.InteractiveGestures = [LongTap, DoubleTap]
+      TabOrder = 42
+      Text = '705EADF7-EAAD-4f7c-8141-862C2C511A61'
+      Position.X = 448.000000000000000000
+      Position.Y = 56.000000000000000000
+      Size.Width = 353.000000000000000000
+      Size.Height = 22.000000000000000000
+      Size.PlatformDefault = False
     end
   end
   object MainMenu1: TMainMenu
-    Left = 616
-    Top = 216
+    Left = 464
+    Top = 272
+  end
+  object HTTPRIO1: THTTPRIO
+    HTTPWebNode.UseUTF8InHeader = True
+    HTTPWebNode.InvokeOptions = [soIgnoreInvalidCerts, soAutoCheckAccessPointViaUDDI]
+    HTTPWebNode.WebNodeOptions = []
+    Converter.Options = [soSendMultiRefObj, soTryAllSchema, soRootRefNodesToBody, soCacheMimeResponse, soUTF8EncodeXML]
+    Left = 384
+    Top = 400
   end
 end
