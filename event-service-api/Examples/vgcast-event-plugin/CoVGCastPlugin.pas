@@ -55,7 +55,7 @@ begin
   Except
     on e:Exception do
     begin
-      m_piLog.LogError(Format('VGCAST Plugin: %s', [e.Message]));
+      m_piLog.LogError(Format('[VGCAST]: %s', [e.Message]));
     end;
   end;
 
@@ -81,39 +81,44 @@ begin
 
   if not SameText(bstrDevice, 'VGCAST') then
   begin
-		m_piLog.LogInfo('VGCAST Plugin: Device is not recognized.');
-		m_piLog.LogInfo(bstrDevice);
+		m_piLog.LogInfo('[VGCAST]: Device is not recognized.');
+		m_piLog.LogInfo(Format('[VGCAST]: bstrDevice = %s', [bstrDevice]));
     exit(S_FALSE);
   end;
 
-	m_piLog.LogInfo('VGCAST Plugin: Event is received');
+	m_piLog.LogInfo('[VGCAST]: Event is received');
 
+  m_piLog.LogInfo(Format('[%s]: Command = %s', [bstrDevice, bstrCommand]));
+  m_piLog.LogInfo(Format('[%s]: Op1 = %s', [bstrDevice, bstrOp1]));
+  m_piLog.LogInfo(Format('[%s]: Op2 = %s', [bstrDevice, bstrOp2]));
+  m_piLog.LogInfo(Format('[%s]: Op3 = %s', [bstrDevice, bstrOp3]));
 
   // PLAY
   if SameText(bstrCommand, 'PLAY') then
   begin
     if Length(bstrOp1) <= 0 then
     begin
-      m_piLog.LogError('VGCAST Plugin: MbstrOp1');
+      m_piLog.LogError(Format('[%s]: bstrOp1 is empty', [bstrDevice]));
       exit(S_FALSE);
     end;
 
     LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
+    m_piLog.LogInfo(Format('[%s]: TplFileName = %s', [bstrDevice, LTplFileName]));
 
     if FVgCastHandler.TplList.open(LTplFileName) then
     begin
       LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
       if LVgTpl.PLAY then
       begin
-        m_piLog.LogInfo(Format('VGCAST Plugin: Play %s', [LVgTpl.Name]));
+        m_piLog.LogInfo(Format('[%s]: Play %s', [bstrDevice, LVgTpl.Name]));
       end else
       begin
-        m_piLog.LogError(Format('VGCAST Plugin: Play %s', [LVgTpl.Name]));
+        m_piLog.LogError(Format('[%s]: Play %s', [bstrDevice, LVgTpl.Name]));
         exit(S_FALSE);
       end;
     end else
     begin
-        m_piLog.LogError(Format('VGCAST Plugin: Open %s', [LTplFileName]));
+        m_piLog.LogError(Format('[%s]: Open %s', [bstrDevice, LTplFileName]));
         exit(S_FALSE);
     end;
   end else
@@ -121,17 +126,20 @@ begin
   begin
     if Length(bstrOp1) <= 0 then
     begin
-      m_piLog.LogError('VGCAST Plugin: MbstrOp1');
+      m_piLog.LogError(Format('[%s]: bstrOp1 is empty', [bstrDevice]));
       exit(S_FALSE);
-    end;  
-	LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
-	LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
+    end;
+
+	  LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
+    m_piLog.LogInfo(Format('[%s]: TplFileName = %s', [bstrDevice, LTplFileName]));
+
+	  LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
     if LVgTpl.HIDE then
     begin
-        m_piLog.LogInfo(Format('VGCAST Plugin: Hide %s', [LVgTpl.Name]));
+        m_piLog.LogInfo(Format('[%s]: Hide %s', [bstrDevice, LVgTpl.Name]));
     end else
     begin
-        m_piLog.LogError(Format('VGCAST Plugin: Hide %s', [LVgTpl.Name]));
+        m_piLog.LogError(Format('[%s]: Hide %s', [bstrDevice, LVgTpl.Name]));
         exit(S_FALSE);
     end;	
   end else
@@ -139,17 +147,20 @@ begin
   begin
     if Length(bstrOp1) <= 0 then
     begin
-      m_piLog.LogError('VGCAST Plugin: MbstrOp1');
+      m_piLog.LogError(Format('[%s]: bstrOp1 is empty', [bstrDevice]));
       exit(S_FALSE);
-    end;  
-	LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
-	LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
+    end;
+
+	  LTplFileName := format('%s\%s.tpl', [FMainConfig.TplRepository, bstrOp1]);
+    m_piLog.LogInfo(Format('[%s]: TplFileName = %s', [bstrDevice, LTplFileName]));
+
+	  LVgTpl := FVgCastHandler.TplList.FindByFileName(LTplFileName);
     if LVgTpl.DEL then
     begin
-        m_piLog.LogInfo(Format('VGCAST Plugin: Del %s', [LVgTpl.Name]));
+        m_piLog.LogInfo(Format('[%s]: Del %s', [bstrDevice, LVgTpl.Name]));
     end else
     begin
-        m_piLog.LogError(Format('VGCAST Plugin: Del %s', [LVgTpl.Name]));
+        m_piLog.LogError(Format('[%s]: Del %s', [bstrDevice, LVgTpl.Name]));
         exit(S_FALSE);
     end;	  
   end;

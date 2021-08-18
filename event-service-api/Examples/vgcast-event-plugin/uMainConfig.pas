@@ -95,7 +95,7 @@ end;
 
 procedure TMainConfig.ParseJson(AJsonObject: TJsonObject);
 var
-  LPairs: TJSONPairEnumerator;
+  LPairs: TJSONObject.TEnumerator;
   oVGCAST : TJSONObject;
 begin
   LPairs := AJsonObject.GetEnumerator;
